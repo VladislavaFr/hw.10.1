@@ -1,23 +1,17 @@
 from datetime import datetime
 
-def filter_by_state(data, state='EXECUTED') -> list:
-    """Функция, которая принимает список словарей и
-    опционально значение для ключа state"""
-    operation_executed = []
-    operation_canceled = []
+
+def filter_by_state(data: list[dict], state: str = 'EXECUTED') -> list[dict]:
+    """Функция фильтрации по статусу операции"""
+    result = []
 
     for i in data:
-        if i["state"] == "CANCELED":
-            operation_canceled.append(i)
-            return operation_canceled
-        elif i["state"] == "EXECUTED":
-            operation_executed.append(i)
-            return operation_executed
+        if i["state"] == state:
+            result.append(i)
+    return result
 
 
-
-def sort_by_date(data, reverse=True) -> list:
-    """Функция, которая принимает список словарей и
-    необязательный параметр, задающий порядок сортировки"""
-    sorted_dict = sorted(data, key=lambda  x: datetime.fromisoformat(x["date"]), reverse=reverse)
+def sort_by_date(data: list[dict], reverse: bool = True) -> list[dict]:
+    """Функция сортировки элементов списка по дате"""
+    sorted_dict = sorted(data, key=lambda x: datetime.fromisoformat(x["date"]), reverse=reverse)
     return sorted_dict
